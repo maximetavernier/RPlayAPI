@@ -1,0 +1,11 @@
+*.dll
+*.out
+*.obj
+*.pdb
+*.so
+*.a
+obj
+bin
+out
+**/.DS_Store
+*.idea*

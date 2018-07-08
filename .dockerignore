@@ -1,0 +1,7 @@
+*.out
+*.obj
+*.pdb
+obj
+bin
+**/.DS_Store
+*.idea*

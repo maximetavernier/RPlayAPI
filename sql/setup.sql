@@ -1,4 +1,4 @@
-insert into lang (iso, lang) values
+insert into lang (iso, name) values
     ('ab', 'Abkhazian'),
     ('aa', 'Afar'),
     ('af', 'Afrikaans'),
@@ -29,8 +29,8 @@ insert into lang (iso, lang) values
     ('ce', 'Chechen'),
     ('ny', 'Chichewa'),
     ('zh', 'Chinese'),
-    ('zh-Hans', 'Chinese (Simplified)'),
-    ('zh-Hant', 'Chinese (Traditional)'),
+--    ('zh-Hans', 'Chinese (Simplified)'),
+--    ('zh-Hant', 'Chinese (Traditional)'),
     ('cv', 'Chuvash'),
     ('kw', 'Cornish'),
     ('co', 'Corsican'),
@@ -189,7 +189,7 @@ insert into lang (iso, lang) values
     ('za', 'Zhuang'),
     ('zu', 'Zulu');
 
-insert into country (country, iso, code) values
+insert into country (name, iso, code) values
     ('Afghanistan', 'AF', 004),
     ('Åland Islands', 'AX', 248),
     ('Albania', 'AL', 008),

@@ -3,8 +3,8 @@ CREATE EXTENSION pgcrypto;
 --  Reference table
 CREATE TABLE lang (
 	id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
-	iso char(7) NOT NULL,
-	lang text NOT NULL
+	iso char(2) NOT NULL,
+	name text NOT NULL
 );
 CREATE UNIQUE INDEX ix__lang__id on lang(id);
 
@@ -13,7 +13,7 @@ CREATE TABLE country (
 	id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
 	iso char(2) NOT NULL,
 	code smallint unique not null,
-    country char(64) not null
+    name char(64) not null
 );
 CREATE UNIQUE INDEX ix__country__id on country(id);
 
@@ -22,7 +22,7 @@ CREATE TABLE locale (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     lang_id uuid NOT NULL REFERENCES lang(id),
     country_id uuid NOT NULL REFERENCES country(id),
-    code char(5) NULL
+    iso char(5) NULL
 );
 CREATE UNIQUE INDEX ix__locale__id on locale(id);
 
@@ -112,18 +112,18 @@ CREATE TABLE radio_instance (
 CREATE UNIQUE INDEX ix__radio_instance__id on radio_instance(id);
 CREATE UNIQUE INDEX ix__radio_instance__hash on radio_instance(hash);
 
-CREATE TABLE radio_users (
+CREATE TABLE radio_user (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     metadata_id uuid NOT NULL REFERENCES metadata(id),
     radio_id uuid NOT NULL REFERENCES radio_instance(id),
     user_id uuid NOT NULL REFERENCES abstract_user(id)
 );
-CREATE UNIQUE INDEX ix__radio_users__id on radio_users(id);
+CREATE UNIQUE INDEX ix__radio_user__id on radio_user(id);
 
 CREATE TABLE radio_user_role (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     metadata_id uuid NOT NULL REFERENCES metadata(id),
-    user_id uuid NOT NULL REFERENCES radio_users(id),
+    radio_user_id uuid NOT NULL REFERENCES radio_user(id),
     role_id uuid NOT NULL REFERENCES user_role(id)
 );
 CREATE UNIQUE INDEX ix__radio_user_role__id on radio_user_role(id);
@@ -131,7 +131,7 @@ CREATE UNIQUE INDEX ix__radio_user_role__id on radio_user_role(id);
 CREATE TABLE radio_user_status (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     metadata_id uuid NOT NULL REFERENCES metadata(id),
-    user_id uuid NOT NULL REFERENCES radio_users(id),
+    radio_user_id uuid NOT NULL REFERENCES radio_user(id),
     status_id uuid NOT NULL REFERENCES user_status(id)
 );
 CREATE UNIQUE INDEX ix__radio_user_status__id on radio_user_status(id);
@@ -196,17 +196,17 @@ CREATE UNIQUE INDEX ix__salon_history__id on salon_history(id);
 CREATE TABLE salon_user_role (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     metadata_id uuid NOT NULL REFERENCES metadata(id),
-    user_id uuid NOT NULL REFERENCES radio_users(id),
+    radio_user_id uuid NOT NULL REFERENCES radio_user(id),
     role_id uuid NOT NULL REFERENCES user_role(id)
 );
 CREATE UNIQUE INDEX ix__salon_user_role__id on salon_user_role(id);
-CREATE UNIQUE INDEX ix__salon_user_role__user_id on salon_user_role(user_id);
+CREATE UNIQUE INDEX ix__salon_user_role__user_id on salon_user_role(radio_user_id);
 
 CREATE TABLE salon_user_status (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     metadata_id uuid NOT NULL REFERENCES metadata(id),
-    user_id uuid NOT NULL REFERENCES radio_users(id),
+    radio_user_id uuid NOT NULL REFERENCES radio_user(id),
     status_id uuid NOT NULL REFERENCES user_status(id)
 );
 CREATE UNIQUE INDEX ix__salon_user_status__id on salon_user_status(id);
-CREATE UNIQUE INDEX ix__salon_user_status__user_id on salon_user_status(user_id);
+CREATE UNIQUE INDEX ix__salon_user_status__user_id on salon_user_status(radio_user_id);
