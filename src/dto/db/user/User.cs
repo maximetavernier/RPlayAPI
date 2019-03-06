@@ -1,10 +1,12 @@
 using System;
+using Dapper.Contrib.Extensions;
 using Newtonsoft.Json;
 
 namespace RPlay.DTO.DB
 {
     [JsonObject]
-    public sealed class User : DBModel
+    [Table("platform_user")]
+    public sealed class PlatformUser : DBModel
     {
         [JsonProperty("metadata_id")]
         public Guid MetadataId { get; set; }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "business", "business\business.csproj", "{8AF7B548-8404-43A2-8C25-B8BB65E40A17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rplay-tests", "rplay-tests\rplay-tests.csproj", "{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{8AF7B548-8404-43A2-8C25-B8BB65E40A17}.Release|x64.Build.0 = Release|x64
 		{8AF7B548-8404-43A2-8C25-B8BB65E40A17}.Release|x86.ActiveCfg = Release|x86
 		{8AF7B548-8404-43A2-8C25-B8BB65E40A17}.Release|x86.Build.0 = Release|x86
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Debug|x64.ActiveCfg = Debug|x64
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Debug|x64.Build.0 = Debug|x64
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Debug|x86.ActiveCfg = Debug|x86
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Debug|x86.Build.0 = Debug|x86
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Release|x64.ActiveCfg = Release|x64
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Release|x64.Build.0 = Release|x64
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Release|x86.ActiveCfg = Release|x86
+		{1FE67ED6-FC77-43FE-8779-0C7A80E84D43}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal

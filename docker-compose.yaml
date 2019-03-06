@@ -1,4 +1,36 @@
-rplay-api:
-  build: .
-  ports:
-  - "8081:80"
+version: '2'
+
+services:
+  rplay-pgsql:
+    image: rplay-pgsql
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - rplay-network
+
+  rplay-api:
+    image: rplay-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:80
+    links:
+      - rplay-pgsql
+    depends_on:
+      - rplay-pgsql
+    networks:
+      - rplay-network
+
+volumes:
+  pgdata:
+
+networks:
+  rplay-network:
+    driver: bridge

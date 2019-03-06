@@ -1,27 +1,50 @@
-CREATE EXTENSION pgcrypto;
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+CREATE DATABASE rplay_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
+ALTER DATABASE rplay_db OWNER TO rplay_root;
+
+\connect rplay_db
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 --  Reference table
-CREATE TABLE lang (
+CREATE TABLE reflang (
 	id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
 	iso char(2) NOT NULL,
 	name text NOT NULL
 );
-CREATE UNIQUE INDEX ix__lang__id on lang(id);
+CREATE UNIQUE INDEX ix__reflang__id on reflang(id);
 
 --  Reference table
-CREATE TABLE country (
+CREATE TABLE refcountry (
 	id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
 	iso char(2) NOT NULL,
 	code smallint unique not null,
     name char(64) not null
 );
-CREATE UNIQUE INDEX ix__country__id on country(id);
+CREATE UNIQUE INDEX ix__refcountry__id on refcountry(id);
 
 -- Reference table
 CREATE TABLE locale (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
-    lang_id uuid NOT NULL REFERENCES lang(id),
-    country_id uuid NOT NULL REFERENCES country(id),
+    lang_id uuid NOT NULL REFERENCES reflang(id),
+    country_id uuid NOT NULL REFERENCES refcountry(id),
     iso char(5) NULL
 );
 CREATE UNIQUE INDEX ix__locale__id on locale(id);
@@ -45,7 +68,6 @@ CREATE TABLE user_status (
     is_salon boolean NOT NULL default false
 );
 CREATE UNIQUE INDEX ix__user_status__id on user_status(id);
-
 
 CREATE TABLE abstract_user (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -84,8 +106,8 @@ CREATE TABLE platform_user (
     metadata_id uuid NOT NULL REFERENCES metadata(id),
     abstract_id uuid NOT NULL REFERENCES abstract_user(id),
     locale_id uuid NULL REFERENCES locale(id),
-    firstname char(128) NOT NULL,
-    lastname char(128) NOT NULL,
+    firstname char(128) NULL,
+    lastname char(128) NULL,
     email char(128) NOT NULL,
     image_url char(512) NULL,
     gender bit NOT NULL default 0::bit,
@@ -94,6 +116,15 @@ CREATE TABLE platform_user (
 CREATE UNIQUE INDEX ix__user__id on platform_user(id);
 CREATE UNIQUE INDEX ix__user__abstract_id on platform_user(abstract_id);
 CREATE UNIQUE INDEX ix__user__email on platform_user(email);
+
+CREATE TABLE user_session (
+    id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    metadata_id uuid NOT NULL REFERENCES metadata(id),
+    abstract_id uuid NOT NULL REFERENCES abstract_user(id),
+    started date NOT NULL,
+    closed date NULL
+);
+CREATE UNIQUE INDEX ix__user_session__id on user_session(id);
 
 CREATE TABLE preferences (
     id uuid UNIQUE NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
